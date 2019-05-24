@@ -1,2 +1,0 @@
-//lvl, hlavní budova, kasarna, staje, kovarna, dilna, nadvori, socha, trziste, drevorubec, železo, selak, skladiste, hradby
-0,5,1,0,0,0,1,1,1,17,17,17,4,14,5
