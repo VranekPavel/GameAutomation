@@ -13,7 +13,7 @@ import static utils.FileUtil.*;
 
 public class Tests extends BaseTest {
 
-    @Test
+    //@Test
     public void villageLevel(){
         List<List<String>> levels = new ArrayList<>();
         try{
@@ -26,7 +26,7 @@ public class Tests extends BaseTest {
         MainBuilding mainBuilding = villagePage.goMain();
     }
 
-    @Test
+    //@Test
     public void firstPass(){
 
         try{
