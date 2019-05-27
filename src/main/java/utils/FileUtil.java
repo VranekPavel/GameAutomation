@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class FileUtil {
 
@@ -44,23 +45,33 @@ public class FileUtil {
             writer.close();
         }
 
-    public static String readFile(String fileName, String searchStr) throws FileNotFoundException {
+    public static ArrayList<String> readFile(String fileName) throws FileNotFoundException {
+        ClassLoader classLoader = new FileUtil().getClass().getClassLoader();
+        File file = new File(classLoader.getResource(fileName).getFile());
+        Scanner scan = new Scanner(file);
+        ArrayList<String> output = new ArrayList<>();
+        while(scan.hasNext()){
+            output.add(scan.nextLine().toLowerCase());
+        }
+        return output;
+    }
+
+    public static String scanFile(String fileName, String searchStr) throws FileNotFoundException {
         ClassLoader classLoader = new FileUtil().getClass().getClassLoader();
         File file = new File(classLoader.getResource(fileName).getFile());
         Scanner scan = new Scanner(file);
         String output = "";
-        while(scan.hasNext()){
+        Boolean run = true;
+        while(scan.hasNext() && run){
             String line = scan.nextLine().toLowerCase();
-            if(searchStr != null) {
                 if (line.contains(searchStr)) {
                     output = line;
+                    run = false;
                 }
-            }else{
-                output += line;
-            }
         }
         return output;
     }
+
 
     public static List<List<String>> readCSVFile(String fileName) throws FileNotFoundException {
         List<List<String>> records = new ArrayList<>();

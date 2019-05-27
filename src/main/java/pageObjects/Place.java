@@ -1,9 +1,6 @@
 package pageObjects;
 
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -21,6 +18,9 @@ public class Place {
 
     @FindBy(xpath = "//div[@class=\"target-select-autocomplete\"]//span[@class=\"village-info\"]")
     private WebElement targetInfo;
+
+    @FindBy(xpath = "//div[@class=\"target-select-autocomplete\"]//span[@class=\"village-distance\"]")
+    private WebElement targetDistance;
 
     @FindBy(id = "target_attack")
     private WebElement attack;
@@ -49,17 +49,29 @@ public class Place {
 
     public void selectVillage(String village){
         je.executeScript("arguments[0].value='" + village + "';", placeTarget);
+        placeTarget.sendKeys(Keys.ENTER);
         //TODO kontrolovat jestli vesnce nebyla obsazena
     }
 
     public boolean selectTroopsAndAttack(){
         Boolean repeat = true;
-        je.executeScript("arguments[0].click();", templateA);
-        attack.click();
+        double distance = Double.parseDouble(targetDistance.getText().substring(12, 14));
+        if (distance <= 7){
+            je.executeScript("arguments[0].click();", templateA);
+            attack.click();
 
-        try{
-            attackConfirm.click();
-        }catch (NoSuchElementException e){
+            try{
+                attackConfirm.click();
+            }catch (NoSuchElementException e){
+                je.executeScript("arguments[0].click();", templateB);
+                attack.click();
+                try{
+                    attackConfirm.click();
+                }catch(NoSuchElementException f){
+                    repeat = false;
+                }
+            }
+        } else if (distance <= 14){
             je.executeScript("arguments[0].click();", templateB);
             attack.click();
             try{
@@ -68,6 +80,7 @@ public class Place {
                 repeat = false;
             }
         }
+
         return repeat;
     }
 }

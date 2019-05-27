@@ -5,11 +5,14 @@ import pageObjects.Place;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import static utils.FileUtil.*;
+//import static utils.CustomComparator.*;
+import static utils.Methods.*;
 
 public class Tests extends BaseTest {
 
@@ -34,31 +37,25 @@ public class Tests extends BaseTest {
         }catch(IOException e){
 
         }
-        try {
-            readFile("villages.txt", villagePage.getCoordinates());
-        } catch (FileNotFoundException e){
 
-        }
     }
 
     @Test
     public void loot(){
         Place place = villagePage.goPlace();
         Boolean repeat = true;
-
-        String villages = "";
+        String village = villagePage.getCoordinates();
+        ArrayList<String> villages = new ArrayList<>();
         //vrať všechny vesnice pro loot v jednom dlouhém stringu (nice)
         try {
-            villages = readFile("loot.txt", null);
-        } catch (FileNotFoundException e){
-
-        }
+            villages = readFile("loot.txt");
+        } catch (FileNotFoundException e){}
+        villages.sort((a,b ) -> countDistance(village, a).compareTo(countDistance(village, b)));
         //poslat útok do každé loot vesnice
-        while(villages.length() > 0 && repeat.equals(true)){
-                String village = villages.substring(0, 7);
-            villages = villages.substring(7);
-
-            place.selectVillage(village);
+        int i = 0;
+        while(repeat.equals(true) && villages.size() <= i){
+            place.selectVillage(villages.get(i));
+            i += 1;
             repeat = place.selectTroopsAndAttack();
         }
     }
