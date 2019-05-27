@@ -53,7 +53,7 @@ public class Tests extends BaseTest {
         villages.sort((a,b ) -> countDistance(village, a).compareTo(countDistance(village, b)));
         //poslat útok do každé loot vesnice
         int i = 0;
-        while(repeat.equals(true) && villages.size() <= i){
+        while(repeat.equals(true) && villages.size() >= i){
             place.selectVillage(villages.get(i));
             i += 1;
             repeat = place.selectTroopsAndAttack();
