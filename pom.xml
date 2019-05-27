@@ -48,9 +48,6 @@
                         <user>caymon</user>
                         <pwd>1241995</pwd>
                     </systemPropertyVariables>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
-                    </suiteXmlFiles>
                 </configuration>
             </plugin>
         </plugins>

@@ -23,7 +23,6 @@ public class BaseTest {
     public void testSuiteSetup() {
         WebDriverManager.chromedriver().setup();
     }
-
     @BeforeMethod
     public void testMethodSetUp() {
         driver = new ChromeDriver();
