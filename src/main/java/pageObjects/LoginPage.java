@@ -1,7 +1,6 @@
 package pageObjects;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -9,6 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class LoginPage {
     private WebDriver driver;
     private WebDriverWait wait;
+    private JavascriptExecutor je;
 
     @FindBy(xpath = "// a[@class = \"world-select\"]")
     private WebElement world;
@@ -28,6 +28,7 @@ public class LoginPage {
     public LoginPage(WebDriver driver) {
         this.driver = driver;
         wait = new WebDriverWait(driver,30);
+        je = (JavascriptExecutor)driver;
         PageFactory.initElements(driver, this);
     }
 
@@ -38,6 +39,6 @@ public class LoginPage {
             remember.click();
         }
         login.click();
-        world.click();
+        je.executeScript("arguments[0].click();", world);
     }
 }
