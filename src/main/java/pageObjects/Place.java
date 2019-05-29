@@ -53,10 +53,9 @@ public class Place {
         //TODO kontrolovat jestli vesnce nebyla obsazena
     }
 
-    public boolean selectTroopsAndAttack(){
-        Boolean repeat = true;
+    public int selectTroopsAndAttack(int repeat){
         double distance = Double.parseDouble(targetDistance.getText().substring(12, 14));
-        if (distance <= 7){
+        if (distance <= 7 && repeat == 0){
             je.executeScript("arguments[0].click();", templateA);
             attack.click();
 
@@ -67,17 +66,17 @@ public class Place {
                 attack.click();
                 try{
                     attackConfirm.click();
+                    repeat = 1;
                 }catch(NoSuchElementException f){
-                    repeat = false;
                 }
             }
-        } else if (distance <= 14){
+        } else {
             je.executeScript("arguments[0].click();", templateB);
             attack.click();
             try{
                 attackConfirm.click();
             }catch(NoSuchElementException f){
-                repeat = false;
+                repeat = 2;
             }
         }
 

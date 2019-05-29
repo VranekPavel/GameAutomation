@@ -43,7 +43,7 @@ public class Tests extends BaseTest {
     @Test
     public void loot(){
         Place place = villagePage.goPlace();
-        Boolean repeat = true;
+        int repeat = 0;
         String village = villagePage.getCoordinates();
         ArrayList<String> villages = new ArrayList<>();
         //vrať všechny vesnice pro loot v jednom dlouhém stringu (nice)
@@ -53,10 +53,13 @@ public class Tests extends BaseTest {
         villages.sort((a,b ) -> countDistance(village, a).compareTo(countDistance(village, b)));
         //poslat útok do každé loot vesnice
         int i = 0;
-        while(repeat.equals(true) && villages.size() > i){
+        while(repeat < 2 && villages.size() > i){
+
+            try {Thread.sleep(Math.round(Math.random() * 100)); }catch (InterruptedException e) {Thread.currentThread().interrupt(); }
+
             place.selectVillage(villages.get(i));
             i += 1;
-            repeat = place.selectTroopsAndAttack();
+            repeat = place.selectTroopsAndAttack(repeat);
         }
     }
 }
