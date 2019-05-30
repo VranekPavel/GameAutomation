@@ -24,15 +24,16 @@ public class BaseTest {
 
     @BeforeSuite
     public void testSuiteSetup() {
-        WebDriverManager.firefoxdriver().setup();
+        WebDriverManager.chromedriver().arch32().setup();
     }
     @BeforeMethod
     public void testMethodSetUp() {
-        FirefoxOptions options = new FirefoxOptions();
+        //FirefoxOptions options = new FirefoxOptions();
         //options.addArguments("headless");
         //options.addArguments("disable-gpu");
         //options.addArguments("window-size=1024,768");
-        driver = new FirefoxDriver(options);
+        //driver = new FirefoxDriver();
+        driver = new ChromeDriver();
         driver.get(System.getProperty("url"));
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
